@@ -1,14 +1,32 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+
+  <b-navbar type="dark" variant="dark" class="justify-content-md-center" toggleable="lg">
+      <b-navbar-brand tag="h1" class="mx-4" to="/">
+			  Home
+			</b-navbar-brand>
+			<b-navbar-brand tag="h1" class="mx-4" to="/tickets">
+				Products
+			</b-navbar-brand>
+			<b-navbar-brand tag="h1" class="mx-4" to="/personal">
+				Categories
+			</b-navbar-brand>
+			<b-navbar-brand tag="h1" class="mx-4" to="/categorias">
+				Orders
+			</b-navbar-brand>
+		</b-navbar>
+
+    <router-view class="container  mt-3" />
+		<notifications position="bottom right" />
   </div>
 </template>
 
+
+
+
+
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,16 +35,4 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
