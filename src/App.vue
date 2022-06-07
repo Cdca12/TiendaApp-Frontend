@@ -8,10 +8,10 @@
 			<b-navbar-brand tag="h1" class="mx-4" to="/products">
 				Products
 			</b-navbar-brand>
-			<b-navbar-brand tag="h1" class="mx-4" to="/personal">
+			<b-navbar-brand tag="h1" class="mx-4" to="/categories">
 				Categories
 			</b-navbar-brand>
-			<b-navbar-brand tag="h1" class="mx-4" to="/categorias">
+			<b-navbar-brand tag="h1" class="mx-4" to="/orders">
 				Orders
 			</b-navbar-brand>
 		</b-navbar>

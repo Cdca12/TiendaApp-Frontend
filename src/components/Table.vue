@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b-table class="tabla" stripe hover :busy="busy" :items="items" :fields="fields" >
+		<b-table class="tabla align-middle" stripe hover :busy="busy" :items="items" :fields="fields" >
 			<template #table-busy>
 				<div class="text-center text-danger my-2">
 					<b-spinner class="align-middle"></b-spinner>
@@ -28,7 +28,6 @@ export default {
 </script>
 
 <style>
-
 
 .tabla {
 	background-color: white;
