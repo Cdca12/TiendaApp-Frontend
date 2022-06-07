@@ -52,6 +52,13 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
+    deleteProduct({ commit }, { id, onComplete, onError }) {
+			axios
+				.delete(`${API_URL}/products/${id}`)
+				.then(onComplete)
+				.catch(onError);
+		},
+
   },
   modules: {
   }

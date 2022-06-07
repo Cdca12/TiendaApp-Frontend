@@ -12,7 +12,7 @@
                 <b-button style="margin: 0 5px" variant="warning" @click="onEditProduct(item)">
                 <b-icon icon="pencil-square"  />
                 </b-button>
-                <b-button variant="danger" @click="onEliminar(item)">
+                <b-button variant="danger" @click="onDelete(item)">
                     <b-icon icon="trash" />
                 </b-button>
             </template>
@@ -44,9 +44,51 @@ export default {
         ...mapState(["products"]),
     },
     methods: {
-        ...mapActions(["getProducts"]),
-
-
+        ...mapActions(["getProducts", "deleteProduct"]),
+        onEditProduct(item) {
+            this.$router.push({
+                name: "EditProduct",
+                params: {
+                    id: item.item.productID,
+                },
+            });
+        },
+        onDelete(item) {
+            this.$bvModal
+                .msgBoxConfirm("Are you sure you want to delete this?", {
+                    title: "Delete product",
+                    size: "sm",
+                    buttonSize: "sm",
+                    okVariant: "danger",
+                    okTitle: "Confirm",
+                    cancelTitle: "Cancel",
+                    footerClass: "p-2",
+                    centered: true,
+                })
+                .then(value => {
+                    if (value) {
+                        this.deleteProduct({
+                            id: item.item.productID,
+                            onComplete: res => {
+                                this.$notify({
+                                    type: "success",
+                                    title: "Product deleted successfully",
+                                });
+                                setTimeout(() => this.getProducts(), 500);
+                            },
+                            onError: err => {
+                                this.$notify({
+                                    type: "error",
+                                    title: "Error deleting product",
+                                });
+                            },
+                        });
+                    }
+                })
+                .catch(err => {
+                    // An error ocurred
+                })
+        }
 
     },
     // Life cycle methods
