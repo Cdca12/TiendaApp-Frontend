@@ -3,7 +3,7 @@
     <div class="modal-content" @click.stop>
       <h2>Cart</h2>
       <div class="purchase-button">
-        <b-button variant="primary" @click="purchaseOrder()">
+        <b-button v-bind:disabled='!cartHasItems' variant="primary" @click="purchaseOrder()">
           <b-icon icon="bag" /> Purchase
         </b-button>
       </div>
@@ -46,11 +46,14 @@ export default {
         { key: "total", label: "Total", thStyle: { width: '10%' } },
         { key: "actions", thStyle: { width: '20%' } }
       ],
-      product: {},
+      product: {}
     };
   },
   computed: {
     ...mapState(["cart"]),
+    cartHasItems() {
+      return this.cart.length > 0;
+    }
   },
   methods: {
     ...mapActions(["createOrder"]),
