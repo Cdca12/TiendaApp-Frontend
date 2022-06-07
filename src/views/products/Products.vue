@@ -2,7 +2,7 @@
     <div>
         <h1>Products</h1>
         <div class="add-button">
-            <b-button variant="dark" to="tickets/agregar">
+            <b-button variant="dark" to="products/add">
                 <b-icon icon="plus" /> Add Product
             </b-button>
         </div>
@@ -44,14 +44,14 @@ export default {
         ...mapState(["products"]),
     },
     methods: {
-        ...mapActions(["setProducts"]),
+        ...mapActions(["getProducts"]),
 
 
 
     },
     // Life cycle methods
     created() {
-        this.setProducts();
+        this.getProducts();
         console.log("Test");
     },
 };

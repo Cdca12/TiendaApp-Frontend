@@ -14,19 +14,25 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    SET_PRODUCTS(state, products) {
+    GET_PRODUCTS(state, products) {
       state.products = products;
     },
   },
   actions: {
     // Products
-    setProducts({ commit }) {
+    getProducts({ commit }) {
       axios
         .get(API_URL + "/products")
         .then((response) => {
-          commit("SET_PRODUCTS", response.data);
+          commit("GET_PRODUCTS", response.data);
         });
     },
+    createProduct({ commit }, { body, onComplete, onError }) {
+      axios
+        .post(API_URL + "/products", body)
+        .then(onComplete)
+        .catch(onError);
+    },    
   },
   modules: {
   }

@@ -1,15 +1,22 @@
 import Vue from 'vue'
-
 import VueRouter from 'vue-router'
+
 import Products from '../views/products/Products.vue'
+import AddProduct from '../views/products/AddProduct.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // Products
   {
     path: '/products',
     name: 'Products',
     component: Products
+  },
+  {
+    path: "/products/add",
+    name: "AddProduct",
+    component: AddProduct,
   },
 
 ]
