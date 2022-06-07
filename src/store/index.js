@@ -30,20 +30,32 @@ export default new Vuex.Store({
     SET_ORDER(state, order) {
       state.order = order;
     },
+    // Cart
     ADD_TO_CART(state, product) {
       const productInCart = state.cart.find(p => p.productID === product.productID)
-
-      // console.log(productInCart);
-      // console.log(product);
-
       if (!productInCart) {
         state.cart.push(product);
       } else {
         productInCart.quantity++;
         productInCart.total = productInCart.quantity * productInCart.productPrice;
       }
-
-      // console.log("Saved to cart:", x);
+    },
+    ADD_ITEM(state, productID) {
+      const productInCart = state.cart.find(p => p.productID === productID)
+      productInCart.quantity++;
+      productInCart.total = productInCart.quantity * productInCart.productPrice;
+    },
+    REMOVE_ITEM(state, productID) {
+      const productInCart = state.cart.find(p => p.productID === productID)
+      productInCart.quantity--;
+      productInCart.total = productInCart.quantity * productInCart.productPrice;
+      if (productInCart.quantity == 0) {
+        state.cart.splice(state.cart.indexOf(productInCart), 1)
+      }
+    },
+    REMOVE_FROM_CART(state, productID) {
+      const productInCart = state.cart.find(p => p.productID === productID)
+      state.cart.splice(state.cart.indexOf(productInCart), 1)
     }
   },
   actions: {
@@ -120,12 +132,6 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
-
-    // Client
-    addToCart({ commit }, { product }) {
-      commit("ADD_TO_CART", product);
-    },
-
   },
   modules: {
   }

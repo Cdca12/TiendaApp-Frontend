@@ -10,6 +10,7 @@
 
 			<!-- Bootstrap -->
 			<template #cell(actions)="data" >
+				<slot class="align-middle" name="total" :item="data" > </slot>
 				<slot class="align-middle" name="actions" :item="data" > </slot>
 			</template>
 		</b-table>

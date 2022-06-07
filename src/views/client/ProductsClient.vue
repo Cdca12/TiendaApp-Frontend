@@ -4,18 +4,28 @@
   
         <Table :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
-                <b-button variant="primary" @click="addItem(item)">
+                <b-button variant="primary" @click="addToCart(item)">
                     <b-icon icon="plus"/>
                 </b-button>
             </template>
         </Table>
 
          <Table :items="cart" :fields="cartFields">
+            <template slot="total" slot-scope="{ item }">
+            </template>
             <template slot="actions" slot-scope="{ item }">
-                {{item.productName}}
+                <b-button variant="secondary" @click="removeItem(item)">
+                    <b-icon icon="dash" />
+                </b-button>
+                <b-button variant="primary" class="mx-1" @click="addItem(item)">
+                    <b-icon icon="plus"/>
+                </b-button>
+                <b-button variant="danger" @click="removeFromCart(item)">
+                    <b-icon icon="trash" />
+                </b-button>
+
             </template>
         </Table>
-        Total
     </div>
 </template>
 
@@ -44,9 +54,9 @@ export default {
                 { key: "quantity", label: "Quantity" },
                 { key: "quantity", label: "Quantity" },
                 { key: "total", label: "Total", thStyle: { width: '15%' } },
-                { key: "actions", label: "Total", thStyle: { width: '15%' } }
+                { key: "actions", thStyle: { width: '15%' } }
             ],
-            product: {}
+            product: {},
         };
     },
     computed: {
@@ -54,16 +64,28 @@ export default {
     },
     methods: {
         ...mapActions(["getProducts"]),
-        addItem(item) {
+        addToCart(item) {
             this.product = {
                 productID: item.item.productID,
                 productName: item.item.productName,
                 productPrice: item.item.productPrice,
                 quantity: 1,
-                clientID: 1,
+                clientID: item.item.clientID,
                 total: item.item.productPrice * 1
             }
             this.$store.commit("ADD_TO_CART", this.product);
+        },
+        addItem(item) {
+            let { productID } = item.item;
+            this.$store.commit("ADD_ITEM", productID);
+        },
+        removeItem(item) {
+            let { productID } = item.item;
+            this.$store.commit("REMOVE_ITEM", productID);
+        },
+        removeFromCart(item) {
+            let { productID } = item.item;
+            this.$store.commit("REMOVE_FROM_CART", productID);   
         }
     },
     // Life cycle methods
