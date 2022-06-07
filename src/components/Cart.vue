@@ -3,7 +3,7 @@
     <div class="modal-content" @click.stop>
       <h2>Cart</h2>
       <div class="purchase-button">
-        <b-button variant="primary" @click="addToCart(item)">
+        <b-button variant="primary" @click="purchaseOrder()">
           <b-icon icon="bag" /> Purchase
         </b-button>
       </div>
@@ -24,9 +24,6 @@
 
       </Table>
     </div>
-
-
-
   </div>
 </template>
 
@@ -56,6 +53,25 @@ export default {
     ...mapState(["cart"]),
   },
   methods: {
+    ...mapActions(["createOrder"]),
+    purchaseOrder() {
+      this.createOrder({
+        onComplete: res => {
+          this.$notify({
+            type: "success",
+            title: "Order purchased successfully",
+          });
+          setTimeout(() => this.$emit('closeCart'), 2000);
+        },
+        onError: err => {
+          this.$notify({
+            type: "error",
+            title: "Error purchasing order",
+          });
+        },
+      });
+
+    },
     addItem(item) {
       let { productID } = item.item;
       this.$store.commit("ADD_ITEM", productID);

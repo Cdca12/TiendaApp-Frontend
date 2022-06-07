@@ -43,7 +43,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["products", "cart"]),
+        ...mapState(["products", "cart", "clientID"]),
     },
     methods: {
         ...mapActions(["getProducts"]),
@@ -53,7 +53,7 @@ export default {
                 productName: item.item.productName,
                 productPrice: item.item.productPrice,
                 quantity: 1,
-                clientID: item.item.clientID,
+                clientID: this.clientID, 
                 total: item.item.productPrice * 1
             }
             this.$store.commit("ADD_TO_CART", this.product);

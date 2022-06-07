@@ -12,8 +12,8 @@ export default new Vuex.Store({
     products: [],
     product: {},
     orders: [],
-
-    cart: []
+    cart: [],
+    clientID: 1
   },
   getters: {
   },
@@ -56,6 +56,9 @@ export default new Vuex.Store({
     REMOVE_FROM_CART(state, productID) {
       const productInCart = state.cart.find(p => p.productID === productID)
       state.cart.splice(state.cart.indexOf(productInCart), 1)
+    },
+    CLEAN_CART(state) {
+      state.cart = []
     }
   },
   actions: {
@@ -114,10 +117,17 @@ export default new Vuex.Store({
         })
         .catch(onError);
     },
-    createOrder({ commit }, { body, onComplete, onError }) {
+    createOrder({ commit, state }, { onComplete, onError }) {
       axios
-        .post(`${API_URL}/orders`, body)
-        .then(onComplete)
+        .post(`${API_URL}/orders`, {
+          ProductsID: state.cart.map(product => product.productID),
+          Quantity: state.cart.map(product => product.quantity),
+          ClientID: state.cart[0].clientID
+        })
+        .then(res => {
+          setTimeout(commit("CLEAN_CART"), 500);
+          onComplete(res);
+        })
         .catch(onError);
     },
     editOrder({ commit }, { id, body, onComplete, onError }) {
@@ -132,6 +142,9 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
+
+
+
   },
   modules: {
   }
