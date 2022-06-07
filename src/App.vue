@@ -5,7 +5,7 @@
       <b-navbar-brand tag="h1" class="mx-4" to="/">
 			  Home
 			</b-navbar-brand>
-			<b-navbar-brand tag="h1" class="mx-4" to="/tickets">
+			<b-navbar-brand tag="h1" class="mx-4" to="/products">
 				Products
 			</b-navbar-brand>
 			<b-navbar-brand tag="h1" class="mx-4" to="/personal">

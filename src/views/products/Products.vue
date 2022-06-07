@@ -7,14 +7,13 @@
             </b-button>
         </div>
 
-        <Table :items="tickets" :fields="fields">
+        <Table :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
-                <b-button variant="warning" class="my-1" @click="onEditarTicket(item)">
-                    <b-icon icon="pencil-square" /> Editar
+                <b-button style="margin: 0 5px" variant="warning" @click="onEditarTicket(item)">
+                <b-icon icon="pencil-square"  />
                 </b-button>
-                <b-button variant="primary" class="mx-2" @click="onEditarEstatus(item)">Cambiar estatus</b-button>
                 <b-button variant="danger" @click="onEliminar(item)">
-                    <b-icon icon="trash" /> Eliminar
+                    <b-icon icon="trash" />
                 </b-button>
             </template>
         </Table>
@@ -42,14 +41,18 @@ export default {
         };
     },
     computed: {
-        
+        ...mapState(["products"]),
     },
     methods: {
+        ...mapActions(["setProducts"]),
+
+
 
     },
     // Life cycle methods
     created() {
-        // this.setTickets();
+        this.setProducts();
+        console.log("Test");
     },
 };
 
@@ -57,10 +60,12 @@ export default {
 </script>
 
 <style>
+
 .add-button {
     float: right;
     margin-right: 1%;
     margin-top: 5px;
     margin-bottom: 15px;
 }
+
 </style>

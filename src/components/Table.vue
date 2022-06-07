@@ -8,7 +8,7 @@
 				</div>
 			</template>
 
-			// Bootstrap
+			<!-- Bootstrap -->
 			<template #cell(actions)="data" >
 				<slot class="align-middle" name="actions" :item="data" > </slot>
 			</template>
