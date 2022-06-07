@@ -9,7 +9,7 @@
 
         <Table :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
-                <b-button style="margin: 0 5px" variant="warning" @click="onEditarTicket(item)">
+                <b-button style="margin: 0 5px" variant="warning" @click="onEditProduct(item)">
                 <b-icon icon="pencil-square"  />
                 </b-button>
                 <b-button variant="danger" @click="onEliminar(item)">
@@ -52,7 +52,6 @@ export default {
     // Life cycle methods
     created() {
         this.getProducts();
-        console.log("Test");
     },
 };
 
@@ -60,12 +59,10 @@ export default {
 </script>
 
 <style>
-
 .add-button {
     float: right;
     margin-right: 1%;
     margin-top: 5px;
     margin-bottom: 15px;
 }
-
 </style>

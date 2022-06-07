@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Add Product</h1>
+        <h1>Edit Product</h1>
         <b-form class="form" @submit.prevent="save()">
             <div class="inputs">
                 <Input 
@@ -21,23 +21,25 @@
                     class="mt-3 col-8" />
             </div>
 
-            <b-button type="submit" class="save-button" variant="dark">Confirm</b-button>
+            <b-button type="submit" class="save-button" variant="dark">Save</b-button>
         </b-form>
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Vue from 'vue'
 import Input from '../../components/Input.vue';
 
 export default {
-    name: "AddProduct",
+    name: "EditProduct",
     components: {
         Input
     },
     data() {
         return {
             product: {
+                productID: "",
                 productName: "",
                 productPrice: ""
             },
@@ -59,7 +61,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["createProduct"]),
+        ...mapActions(["getProduct", "editProduct"]),
         save() {
             if (
                 !(
@@ -70,14 +72,15 @@ export default {
                 // Error: Do nothing
                 this.validationErrors = true;
             } else {
-                // Add Product
+                // Edit Product
                 this.validationErrors = false;
-                this.createProduct({
+                this.editProduct({
+                    id: this.product.productID,
                     body: this.product,
                     onComplete: res => {
                         this.$notify({
                             type: "success",
-                            title: "Product created successfully!",
+                            title: "Product edited successfully!",
                         });
                         this.$router.push({
                             name: "Products",
@@ -86,7 +89,7 @@ export default {
                     onError: err => {
                         this.$notify({
                             type: "error",
-                            title: "Error creating product",
+                            title: "Error editing product",
                         });
                     },
                 });
@@ -94,10 +97,16 @@ export default {
         },
     },
     // Life Cycle methods
+    created() {
+        this.getProduct({
+            id: this.$route.params.id,
+            onComplete: res => Vue.set(this, 'product', res.data)
+        })
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .form {
     margin: auto;
     height: 250px;
@@ -117,7 +126,7 @@ export default {
 }
 
 .save-button {
-    width: 30%;
+    width: 20%;
     margin-top: 30px;
     float: right;
 }
