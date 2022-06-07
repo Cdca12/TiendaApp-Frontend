@@ -1,29 +1,19 @@
 <template>
     <div>
+        <Cart v-show="showCart" @closeCart="showCart = false" />
+
         <h1>ProductsClient</h1>
-  
+        <div class="add-button">
+            <b-button variant="dark" @click="showCart = true">
+                <b-icon icon="cart" /> Cart
+            </b-button>
+        </div>
+
         <Table :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
                 <b-button variant="primary" @click="addToCart(item)">
-                    <b-icon icon="plus"/>
+                    <b-icon icon="plus" />
                 </b-button>
-            </template>
-        </Table>
-
-         <Table :items="cart" :fields="cartFields">
-            <template slot="total" slot-scope="{ item }">
-            </template>
-            <template slot="actions" slot-scope="{ item }">
-                <b-button variant="secondary" @click="removeItem(item)">
-                    <b-icon icon="dash" />
-                </b-button>
-                <b-button variant="primary" class="mx-1" @click="addItem(item)">
-                    <b-icon icon="plus"/>
-                </b-button>
-                <b-button variant="danger" @click="removeFromCart(item)">
-                    <b-icon icon="trash" />
-                </b-button>
-
             </template>
         </Table>
     </div>
@@ -33,30 +23,23 @@
 
 import { mapState, mapActions } from "vuex";
 import Table from "../../components/Table";
+import Cart from '../../components/Cart.vue'
 
 export default {
     name: "ProductsClient",
     components: {
-        Table
+        Table,
+        Cart
     },
     data() {
         return {
             fields: [
                 { key: "productID", label: "ID", thStyle: { width: '15%' } },
                 { key: "productName", label: "Name", thStyle: { width: '50%' } },
-                { key: "productPrice", label: "Price", thStyle: { width: '20%' }},
+                { key: "productPrice", label: "Price", thStyle: { width: '20%' } },
                 { key: "actions", label: "", thStyle: { width: '15%' } }
             ],
-            cartFields: [
-                { key: "productID", label: "ID" },
-                { key: "productName", label: "Name" },
-                { key: "productPrice", label: "Price" },
-                { key: "quantity", label: "Quantity" },
-                { key: "quantity", label: "Quantity" },
-                { key: "total", label: "Total", thStyle: { width: '15%' } },
-                { key: "actions", thStyle: { width: '15%' } }
-            ],
-            product: {},
+            showCart: false,
         };
     },
     computed: {
@@ -75,18 +58,6 @@ export default {
             }
             this.$store.commit("ADD_TO_CART", this.product);
         },
-        addItem(item) {
-            let { productID } = item.item;
-            this.$store.commit("ADD_ITEM", productID);
-        },
-        removeItem(item) {
-            let { productID } = item.item;
-            this.$store.commit("REMOVE_ITEM", productID);
-        },
-        removeFromCart(item) {
-            let { productID } = item.item;
-            this.$store.commit("REMOVE_FROM_CART", productID);   
-        }
     },
     // Life cycle methods
     created() {
@@ -98,5 +69,4 @@ export default {
 </script>
 
 <style>
-
 </style>

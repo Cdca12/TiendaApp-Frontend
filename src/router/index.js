@@ -10,7 +10,6 @@ import Categories from '../views/categories/Categories.vue'
 import Orders from '../views/orders/Orders.vue'
 
 import ProductsClient from '../views/client/ProductsClient.vue'
-import Cart from '../views/client/Cart.vue'
 
 Vue.use(VueRouter)
 
@@ -46,16 +45,10 @@ const routes = [
 
 
   // Client
-
   {
     path: '/client/products',
     name: 'ProductsClient',
     component: ProductsClient
-  },
-  {
-    path: '/client/cart',
-    name: 'Cart',
-    component: Cart
   },
 ]
 
