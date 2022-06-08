@@ -48,7 +48,7 @@
           Categories
         </b-navbar-brand>
         <b-navbar-brand tag="h1" class="mx-4" to="/admin/products/categories">
-          CategoriesProduct
+          CategoryProducts
         </b-navbar-brand>
         <b-navbar-brand tag="h1" class="mx-4" to="/admin/orders">
           Orders
