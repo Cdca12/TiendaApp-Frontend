@@ -3,22 +3,18 @@
         <h1>Edit Product</h1>
         <b-form class="form" @submit.prevent="save()">
             <div class="inputs">
-                <Input 
-                    v-model="product.productName" 
-                    id="productName" 
-                    titulo="Product name"
-                    placeholder="Enter the name of the product" 
-                    :error="validationErrors && !validateName"
-                    messageError="The name of the product is required" 
-                    class="mt-3 col-8" />
-                <Input 
-                    v-model="product.productPrice" 
-                    id="productPrice" 
-                    titulo="Product price"
-                    placeholder="Enter the price of the product" 
-                    :error="validationErrors && !validatePriority"
-                    messageError="The price of the product is required" 
-                    class="mt-3 col-8" />
+                <Input v-model="product.productName" id="productName" titulo="Product name"
+                    placeholder="Enter the name of the product" :error="validationErrors && !validateName"
+                    messageError="The name of the product is required" class="mt-3 col-8" />
+                <Input v-model="product.productPrice" id="productPrice" titulo="Product price"
+                    placeholder="Enter the price of the product" :error="validationErrors && !validatePriority"
+                    messageError="The price of the product is required" class="mt-3 col-8" />
+                <div class="mt-3 col-10">
+                    <input type="file" accept=".jpg,.png" @change="getProductImageName" id="selectedImage"
+                        style="display: none;" />
+                    <input type="button" value="Select image"
+                        onclick="document.getElementById('selectedImage').click();" />
+                </div>
             </div>
 
             <b-button type="submit" class="save-button" variant="dark">Save</b-button>
@@ -41,7 +37,8 @@ export default {
             product: {
                 productID: "",
                 productName: "",
-                productPrice: ""
+                productPrice: "",
+                productImage: ""
             },
             validationErrors: false,
         };
@@ -95,6 +92,9 @@ export default {
                 });
             }
         },
+        getProductImageName(event) {
+            this.product.productImage = event.target.files[0].name;
+        }
     },
     // Life Cycle methods
     created() {
@@ -102,14 +102,14 @@ export default {
             id: this.$route.params.id,
             onComplete: res => Vue.set(this, 'product', res.data)
         })
-  },
+    },
 };
 </script>
 
 <style scoped>
 .form {
     margin: auto;
-    height: 250px;
+    height: 300px;
     margin-top: 30px;
     width: 30%;
     box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.527);
@@ -130,5 +130,4 @@ export default {
     margin-top: 30px;
     float: right;
 }
-
 </style>

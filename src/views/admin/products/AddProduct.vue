@@ -19,6 +19,10 @@
                     :error="validationErrors && !validatePrice"
                     messageError="The price of the product is required" 
                     class="mt-3 col-8" />
+                <div class="mt-3 col-10">
+                    <input type="file" accept=".jpg,.png" @change="getProductImageName" id="selectedImage" style="display: none;" />
+                    <input type="button" value="Select image" onclick="document.getElementById('selectedImage').click();" />
+                </div>
             </div>
 
             <b-button type="submit" class="save-button" variant="dark">Confirm</b-button>
@@ -39,7 +43,8 @@ export default {
         return {
             product: {
                 productName: "",
-                productPrice: ""
+                productPrice: "",
+                productImage: ""
             },
             validationErrors: false,
         };
@@ -92,6 +97,9 @@ export default {
                 });
             }
         },
+        getProductImageName(event) {
+            this.product.productImage = event.target.files[0].name;
+        }
     },
     // Life Cycle methods
 };
@@ -100,7 +108,7 @@ export default {
 <style scoped>
 .form {
     margin: auto;
-    height: 250px;
+    height: 300px;
     margin-top: 30px;
     width: 30%;
     box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.527);
