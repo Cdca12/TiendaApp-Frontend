@@ -9,8 +9,11 @@
 			</template>
 
 			<!-- Bootstrap -->
+			<template #cell(image)="data" >
+				<slot class="align-middle" name="image" :item="data" > </slot>
+			</template>
+
 			<template #cell(actions)="data" >
-				<slot class="align-middle" name="total" :item="data" > </slot>
 				<slot class="align-middle" name="actions" :item="data" > </slot>
 			</template>
 		</b-table>

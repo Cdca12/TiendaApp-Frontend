@@ -8,8 +8,6 @@
         </b-button>
       </div>
       <Table :items="cart" :fields="cartFields">
-        <template slot="total" slot-scope="{ item }">
-        </template>
         <template slot="actions" slot-scope="{ item }">
           <b-button variant="secondary" @click="removeItem(item)">
             <b-icon icon="dash" />
@@ -40,7 +38,7 @@ export default {
     return {
       cartFields: [
         { key: "productID", label: "ID", thStyle: { width: '5%' } },
-        { key: "productName", label: "Name", thStyle: { width: '30%' } },
+        { key: "productName", label: "Name", thStyle: { width: '10%' } },
         { key: "productPrice", label: "Price", thStyle: { width: '10%' } },
         { key: "quantity", label: "Quantity", thStyle: { width: '10%' } },
         { key: "total", label: "Total", thStyle: { width: '10%' } },

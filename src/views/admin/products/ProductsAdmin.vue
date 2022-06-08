@@ -7,16 +7,24 @@
             </b-button>
         </div>
 
+
         <Table :items="products" :fields="fields">
+            <template slot="image" slot-scope="{ item }">
+                <img :src="require(`@/assets/tenis-img/${item.item.productImage}`)" width="100px" />
+            </template>
+
             <template slot="actions" slot-scope="{ item }">
                 <b-button style="margin: 0 5px" variant="warning" @click="onEditProduct(item)">
-                <b-icon icon="pencil-square"  />
+                    <b-icon icon="pencil-square" />
                 </b-button>
                 <b-button variant="danger" @click="onDelete(item)">
                     <b-icon icon="trash" />
                 </b-button>
             </template>
         </Table>
+        
+
+
     </div>
 </template>
 
@@ -33,12 +41,13 @@ export default {
     data() {
         return {
             fields: [
+                { key: "image", label: "Image", thStyle: { width: '10%' } },
                 { key: "productID", label: "ID", thStyle: { width: '15%' } },
-                { key: "productName", label: "Name", thStyle: { width: '50%' } },
-                { key: "productPrice", label: "Price", thStyle: { width: '20%' }},
+                { key: "productName", label: "Name", thStyle: { width: '30%' } },
+                { key: "productPrice", label: "Price", thStyle: { width: '20%' } },
                 { key: "actions", label: "", thStyle: { width: '15%' } }
             ],
-        };
+        }
     },
     computed: {
         ...mapState(["products"]),

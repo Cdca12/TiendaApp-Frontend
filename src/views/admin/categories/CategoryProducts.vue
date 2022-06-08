@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>CategoriesProduct</h1>
+        <h1>CategoryProducts</h1>
 
         <div class="actions">
 
@@ -46,7 +46,7 @@ import Table from "../../../components/Table";
 import AddCategoryProducts from './AddCategoryProducts';
 
 export default {
-    name: "CategoriesProduct",
+    name: "CategoryProducts",
     components: {
         Table,
         AddCategoryProducts
