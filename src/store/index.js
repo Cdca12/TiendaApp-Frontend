@@ -129,11 +129,16 @@ export default new Vuex.Store({
         })
         .catch(onError);
     },
-    getOrderDetail({ commit }, { id }) {
+    getOrderDetail({ commit }, { id, onComplete, noData }) {
       axios
         .get(`${API_URL}/orders/detail/${id}`)
         .then(res => {
-          commit("SET_ORDER_DETAIL", res.data);
+          if (res.data.length == 0) {
+            noData();
+          } else {
+            onComplete();
+            commit("SET_ORDER_DETAIL", res.data);
+          }
         });
     },
     createOrder({ commit, state }, { onComplete, onError }) {

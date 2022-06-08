@@ -7,7 +7,7 @@
             </b-button>
         </div> -->
 
-    
+
         <Table :items="orders" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
                 <b-button style="margin: 0 5px" variant="primary" @click="openOrderDetail(item)">
@@ -35,9 +35,9 @@ import OrderDetail from "./OrderDetail.vue";
 export default {
     name: "Orders",
     components: {
-    Table,
-    OrderDetail
-},
+        Table,
+        OrderDetail
+    },
     data() {
         return {
             fields: [
@@ -65,10 +65,23 @@ export default {
         // },
         openOrderDetail(item) {
             let { orderID } = item.item;
-            this.getOrderDetail({ id: orderID })
-            this.showOrderDetail = true;
-        }, 
-        
+            this.getOrderDetail({
+                id: orderID,
+                onComplete: () => {
+                    this.showOrderDetail = true;
+                },
+                noData: () => {
+                    this.$notify({
+                        type: "error",
+                        title: "This order doesn't have order detail info",
+                    });
+                }
+            });
+
+
+
+        },
+
 
     },
     // Life cycle methods
