@@ -48,7 +48,7 @@ export default {
     methods: {
         ...mapActions(["getProducts"]),
         addToCart(item) {
-            this.product = {
+            let product = {
                 productID: item.item.productID,
                 productName: item.item.productName,
                 productPrice: item.item.productPrice,
@@ -56,7 +56,7 @@ export default {
                 clientID: this.clientID,
                 total: item.item.productPrice * 1
             }
-            this.$store.commit("ADD_TO_CART", this.product);
+            this.$store.commit("ADD_TO_CART", product);
             this.$notify({
                 type: "success",
                 title: "Product added to cart"

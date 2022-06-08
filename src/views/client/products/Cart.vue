@@ -46,7 +46,6 @@ export default {
         { key: "total", label: "Total", thStyle: { width: '10%' } },
         { key: "actions", thStyle: { width: '20%' } }
       ],
-      product: {}
     };
   },
   computed: {

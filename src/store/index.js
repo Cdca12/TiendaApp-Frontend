@@ -12,6 +12,12 @@ export default new Vuex.Store({
     products: [],
     product: {},
     orders: [],
+    orderDetail: [{
+      orderID: 0,
+      clientName: "",
+      orderDate: "1999/01/01",
+      orderTotal: 0
+    }],
     cart: [],
     clientID: 1
   },
@@ -29,6 +35,9 @@ export default new Vuex.Store({
     },
     SET_ORDER(state, order) {
       state.order = order;
+    },
+    SET_ORDER_DETAIL(state, orderDetail) {
+      state.orderDetail = orderDetail;
     },
     // Cart
     ADD_TO_CART(state, product) {
@@ -116,6 +125,13 @@ export default new Vuex.Store({
           onComplete(res);
         })
         .catch(onError);
+    },
+    getOrderDetail({ commit }, { id }) {
+      axios
+        .get(`${API_URL}/orders/detail/${id}`)
+        .then(res => {
+          commit("SET_ORDER_DETAIL", res.data);
+        });
     },
     createOrder({ commit, state }, { onComplete, onError }) {
       axios
