@@ -238,6 +238,13 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
+    deleteCategoryProduct({ commit }, { categoryID, productID, onComplete, onError }) {
+      axios
+        .delete(`${API_URL}/categoryProducts/${categoryID}/${productID}`)
+        .then(onComplete)
+        .catch(onError);
+    },
+
   },
   modules: {
   }

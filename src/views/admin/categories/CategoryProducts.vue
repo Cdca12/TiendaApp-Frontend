@@ -7,7 +7,7 @@
 
             <div class="select "> Category:
 
-                <select style="margin-left: 10px; width: 150px" v-model="categoryId"
+                <select style="margin-left: 10px; width: 150px" v-model="categoryID"
                     @change="obtainProductsByCategory()">
                     <option :value="0" disabled>Select a category</option>
 
@@ -18,7 +18,7 @@
             </div>
 
             <div class="add-button">
-                <b-button v-bind:disabled='!isValidCategory'  @click="openProductsNotCategory()" variant="dark">
+                <b-button v-bind:disabled='!isValidCategory' @click="openProductsNotCategory()" variant="dark">
                     <b-icon icon="plus" /> Add a product to this category
                 </b-button>
             </div>
@@ -27,10 +27,14 @@
 
         <Table class="products-table" :items="productsCategory" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
+                <b-button variant="danger" @click="onDelete(item)">
+                    <b-icon icon="x" />
+                </b-button>
             </template>
         </Table>
 
-        <AddCategoryProducts :categoryID="categoryId" v-show="showProductNotCategory" @closeProductNotCategory="showProductNotCategory = false" />
+        <AddCategoryProducts :categoryID="categoryID" v-show="showProductNotCategory"
+            @closeProductNotCategory="showProductNotCategory = false" />
 
     </div>
 </template>
@@ -52,42 +56,35 @@ export default {
             fields: [
                 { key: "productID", label: "ID", thStyle: { width: '15%' } },
                 { key: "productName", label: "Name", thStyle: { width: '50%' } },
-                { key: "productPrice", label: "Price", thStyle: { width: '20%' } }
+                { key: "productPrice", label: "Price", thStyle: { width: '20%' } },
+                { key: "actions", label: "", thStyle: { width: '15%' } }
             ],
-            categoryId: 0,
+            categoryID: 0,
             showProductNotCategory: false
         };
     },
     computed: {
         ...mapState(["categories", "productsCategory"]),
         isValidCategory() {
-            return this.categoryId != 0;
+            return this.categoryID != 0;
         }
     },
     methods: {
-        ...mapActions(["getCategories", "getProductsByCategory", "getProductsNotInCategory"]),
+        ...mapActions(["getCategories", "getProductsByCategory", "getProductsNotInCategory", "deleteCategoryProduct"]),
         obtainProductsByCategory() {
-            this.getProductsByCategory({ id: this.categoryId });
+            this.getProductsByCategory({ id: this.categoryID });
         },
         openProductsNotCategory() {
-            this.getProductsNotInCategory({ id: this.categoryId });
+            this.getProductsNotInCategory({ id: this.categoryID });
             this.showProductNotCategory = true;
         },
 
 
         // Old
-        onEditProduct(item) {
-            this.$router.push({
-                name: "EditProduct",
-                params: {
-                    id: item.item.productID,
-                },
-            });
-        },
         onDelete(item) {
             this.$bvModal
-                .msgBoxConfirm("Are you sure you want to delete this?", {
-                    title: "Delete product",
+                .msgBoxConfirm("Remove product from this category?", {
+                    title: "Remove product",
                     size: "sm",
                     buttonSize: "sm",
                     okVariant: "danger",
@@ -98,19 +95,20 @@ export default {
                 })
                 .then(value => {
                     if (value) {
-                        this.deleteProduct({
-                            id: item.item.productID,
+                        this.deleteCategoryProduct({
+                            categoryID: this.categoryID,
+                            productID: item.item.productID,
                             onComplete: res => {
                                 this.$notify({
                                     type: "success",
-                                    title: "Product deleted successfully",
+                                    title: "Product removed successfully",
                                 });
-                                setTimeout(() => this.getProducts(), 500);
+                                setTimeout(() => this.obtainProductsByCategory(), 500);
                             },
                             onError: err => {
                                 this.$notify({
                                     type: "error",
-                                    title: "Error deleting product",
+                                    title: "Error removing product",
                                 });
                             },
                         });
