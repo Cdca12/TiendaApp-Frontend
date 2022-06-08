@@ -9,6 +9,7 @@ import EditProduct from '../views/admin/products/EditProduct.vue'
 
 import Categories from '../views/admin/categories/Categories.vue'
 import AddCategory from '../views/admin/categories/AddCategory.vue'
+import EditCategory from '../views/admin/categories/EditCategory.vue'
 import CategoryProducts from '../views/admin/categories/CategoryProducts.vue'
 
 import Orders from '../views/admin/orders/Orders.vue'
@@ -55,6 +56,11 @@ const routes = [
     path: '/admin/categories/add',
     name: 'AddCategory',
     component: AddCategory
+  },
+  {
+    path: '/admin/categories/edit',
+    name: 'EditCategory',
+    component: EditCategory
   },
   {
     path: '/admin/products/categories',

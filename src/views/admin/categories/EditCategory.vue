@@ -1,45 +1,38 @@
 <template>
     <div>
-        <h1>Add Product</h1>
+        <h1>Edit Category</h1>
         <b-form class="form" @submit.prevent="save()">
             <div class="inputs">
                 <Input 
-                    v-model="product.productName" 
-                    id="productName" 
-                    titulo="Product name"
-                    placeholder="Enter the name of the product" 
+                    v-model="category.categoryName" 
+                    id="categoryName" 
+                    titulo="Category name"
+                    placeholder="Enter the name of the category" 
                     :error="validationErrors && !validateName"
-                    messageError="The name of the product is required" 
-                    class="mt-3 col-8" />
-                <Input 
-                    v-model="product.productPrice" 
-                    id="productPrice" 
-                    titulo="Product price"
-                    placeholder="Enter the price of the product" 
-                    :error="validationErrors && !validatePrice"
-                    messageError="The price of the product is required" 
+                    messageError="The name of the category is required" 
                     class="mt-3 col-8" />
             </div>
 
-            <b-button type="submit" class="save-button" variant="dark">Confirm</b-button>
+            <b-button type="submit" class="save-button" variant="dark">Save</b-button>
         </b-form>
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Vue from 'vue'
 import Input from '../../../components/Input.vue';
 
 export default {
-    name: "AddProduct",
+    name: "EditCategory",
     components: {
         Input
     },
     data() {
         return {
-            product: {
-                productName: "",
-                productPrice: ""
+            category: {
+                categoryID: "",
+                categoryName: ""
             },
             validationErrors: false,
         };
@@ -47,46 +40,40 @@ export default {
     computed: {
         validateName() {
             return (
-                this.product.productName !== undefined &&
-                this.product.productName !== ""
-            );
-        },
-        validatePrice() {
-            return (
-                this.product.productPrice !== undefined &&
-                this.product.productPrice !== ""
+                this.category.categoryName !== undefined &&
+                this.category.categoryName !== ""
             );
         },
     },
     methods: {
-        ...mapActions(["createProduct"]),
+        ...mapActions(["getCategory", "editCategory"]),
         save() {
             if (
                 !(
-                    this.validateName &&
-                    this.validatePrice
+                    this.validateName
                 )
             ) {
                 // Error: Do nothing
                 this.validationErrors = true;
             } else {
-                // Add Product
+                // Edit Category
                 this.validationErrors = false;
-                this.createProduct({
-                    body: this.product,
+                this.editCategory({
+                    id: this.category.categoryID,
+                    body: this.category,
                     onComplete: res => {
                         this.$notify({
                             type: "success",
-                            title: "Product created successfully!",
+                            title: "Category edited successfully!",
                         });
                         this.$router.push({
-                            name: "Products",
+                            name: "Categories",
                         });
                     },
                     onError: err => {
                         this.$notify({
                             type: "error",
-                            title: "Error creating product",
+                            title: "Error editing category",
                         });
                     },
                 });
@@ -94,13 +81,19 @@ export default {
         },
     },
     // Life Cycle methods
+    created() {
+        this.getCategory({
+            id: this.$route.params.id,
+            onComplete: res => Vue.set(this, 'category', res.data)
+        })
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .form {
     margin: auto;
-    height: 250px;
+    height: 180px;
     margin-top: 30px;
     width: 30%;
     box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.527);
@@ -117,7 +110,7 @@ export default {
 }
 
 .save-button {
-    width: 30%;
+    width: 20%;
     margin-top: 30px;
     float: right;
 }
