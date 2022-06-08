@@ -22,8 +22,8 @@
 <script>
 
 import { mapState, mapActions } from "vuex";
-import Table from "../../components/Table";
-import Cart from '../../components/Cart.vue'
+import Table from "../../../components/Table";
+import Cart from './Cart.vue'
 
 export default {
     name: "ProductsClient",

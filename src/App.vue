@@ -41,13 +41,13 @@
         <b-navbar-brand tag="h1" class="mx-4" to="/">
           Home
         </b-navbar-brand>
-        <b-navbar-brand tag="h1" class="mx-4" to="/products">
+        <b-navbar-brand tag="h1" class="mx-4" to="/admin/products">
           Products
         </b-navbar-brand>
-        <b-navbar-brand tag="h1" class="mx-4" to="/categories">
+        <b-navbar-brand tag="h1" class="mx-4" to="/admin/categories">
           Categories
         </b-navbar-brand>
-        <b-navbar-brand tag="h1" class="mx-4" to="/orders">
+        <b-navbar-brand tag="h1" class="mx-4" to="/admin/orders">
           Orders
         </b-navbar-brand>
       </b-navbar>

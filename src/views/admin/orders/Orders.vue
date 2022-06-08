@@ -1,13 +1,13 @@
 <template>
     <div>
-        <h1>Products</h1>
+        <h1>Orders</h1>
         <div class="add-button">
             <b-button variant="dark" to="products/add">
-                <b-icon icon="plus" /> Add Product
+                <b-icon icon="plus" /> Add Order
             </b-button>
         </div>
 
-        <Table :items="products" :fields="fields">
+        <Table :items="orders" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
                 <b-button style="margin: 0 5px" variant="warning" @click="onEditProduct(item)">
                 <b-icon icon="pencil-square"  />
@@ -23,28 +23,37 @@
 <script>
 
 import { mapState, mapActions } from "vuex";
-import Table from "../../components/Table";
+import Table from "../../../components/Table";
 
 export default {
-    name: "Products",
+    name: "Orders",
     components: {
         Table
     },
     data() {
         return {
             fields: [
-                { key: "productID", label: "ID", thStyle: { width: '15%' } },
-                { key: "productName", label: "Name", thStyle: { width: '50%' } },
-                { key: "productPrice", label: "Price", thStyle: { width: '20%' }},
+                { key: "orderID", label: "ID", thStyle: { width: '10%' } },
+                { key: "orderDate", label: "Date", thStyle: { width: '30%' } },
+                { key: "orderTotal", label: "Total", thStyle: { width: '20%' }},
+                { key: "clientID", label: "Client", thStyle: { width: '20%' },},
+                // { key: "clientName", label: "Client", thStyle: { width: '20%' }},
                 { key: "actions", label: "", thStyle: { width: '15%' } }
             ],
         };
     },
     computed: {
-        ...mapState(["products"]),
+        ...mapState(["orders"]),
     },
     methods: {
-        ...mapActions(["getProducts", "deleteProduct"]),
+        ...mapActions(["getOrders", "deleteProduct"]),
+        async getClientNames() {
+            // var ordersInfo = this.orders.map((order, i) => { 
+            //     order.value
+            // });
+            // console.log(ordersInfo)
+            console.log(this.orders)
+        },
         onEditProduct(item) {
             this.$router.push({
                 name: "EditProduct",
@@ -72,14 +81,14 @@ export default {
                             onComplete: res => {
                                 this.$notify({
                                     type: "success",
-                                    title: "Product deleted successfully",
+                                    title: "Order deleted successfully",
                                 });
                                 setTimeout(() => this.getProducts(), 500);
                             },
                             onError: err => {
                                 this.$notify({
                                     type: "error",
-                                    title: "Error deleting product",
+                                    title: "Error deleting order",
                                 });
                             },
                         });
@@ -92,8 +101,9 @@ export default {
 
     },
     // Life cycle methods
-    created() {
-        this.getProducts();
+    async created() {
+        await this.getOrders();
+        // await this.getClientNames();
     },
 };
 
@@ -101,6 +111,7 @@ export default {
 </script>
 
 <style>
+
 .add-button {
     float: right;
     margin-right: 1%;

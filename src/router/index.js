@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import ProductsClient from '../views/client/ProductsClient.vue'
+import ProductsClient from '../views/client/products/ProductsClient.vue'
 
+import ProductsAdmin from '../views/admin/products/ProductsAdmin.vue'
+import AddProduct from '../views/admin/products/AddProduct.vue'
+import EditProduct from '../views/admin/products/EditProduct.vue'
 
-import Products from '../views/products/Products.vue'
-import AddProduct from '../views/products/AddProduct.vue'
-import EditProduct from '../views/products/EditProduct.vue'
+import Categories from '../views/admin/categories/Categories.vue'
 
-import Categories from '../views/categories/Categories.vue'
-
-import Orders from '../views/orders/Orders.vue'
+import Orders from '../views/admin/orders/Orders.vue'
 
 
 Vue.use(VueRouter)
@@ -26,42 +25,36 @@ const routes = [
   },
 
 
-
-
-
-
-
+  // Admin
 
   // Products
   {
-    path: '/products',
-    name: 'Products',
-    component: Products
+    path: '/admin/products',
+    name: 'ProductsAdmin',
+    component: ProductsAdmin
   },
   {
-    path: "/products/add",
+    path: "/admin/products/add",
     name: "AddProduct",
     component: AddProduct,
   },
   {
-    path: "/products/edit/:id",
+    path: "/admin/products/edit/:id",
     name: "EditProduct",
     component: EditProduct,
   },
   // Categories
   {
-    path: '/categories',
+    path: '/admin/categories',
     name: 'Categories',
     component: Categories
   },
   // Orders
   {
-    path: '/orders',
+    path: '/admin/orders',
     name: 'Orders',
     component: Orders
   },
-
-
 
 ]
 

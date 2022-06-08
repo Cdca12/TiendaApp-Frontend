@@ -29,7 +29,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import Table from "./Table";
+import Table from "../../../components/Table.vue";
 
 export default {
   name: "ProductsClient",
