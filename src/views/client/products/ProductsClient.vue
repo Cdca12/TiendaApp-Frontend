@@ -12,7 +12,7 @@
         <Table :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
                 <b-button variant="primary" @click="addToCart(item)">
-                    <b-icon icon="plus" />
+                    <b-icon icon="plus" /> Add to Cart
                 </b-button>
             </template>
         </Table>

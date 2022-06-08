@@ -1,24 +1,45 @@
 <template>
     <div>
         <h1>Categories</h1>
-        <div class="add-button">
-            <b-button variant="dark" to="products/add">
-                <b-icon icon="plus" /> Add Product
-            </b-button>
+
+        <div class="actions">
+
+
+            <div class="select"> Select a category: {{ selected }}
+
+                <select style="margin-left: 10px" v-model="selected">
+                    <option selected disabled>Select category</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+
+                    <!-- <option
+                v-for="item in items"
+                :value="item[iditem]"
+                :key="item[iditem]"
+                :selected="item[iditem]==vmodel"
+            >
+            {{ item[name] }} {{ item[lastname] }}
+            </option>  -->
+                </select>
+
+
+
+            </div>
+            <div class="add-button">
+                <b-button variant="dark" to="products/add">
+                    <b-icon icon="plus" /> Add a product to this category
+                </b-button>
+            </div>
+
         </div>
 
-        TODO:
 
-        <!-- <Table :items="products" :fields="fields">
+        <Table class="products-table" :items="products" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
-                <b-button style="margin: 0 5px" variant="warning" @click="onEditProduct(item)">
-                <b-icon icon="pencil-square"  />
-                </b-button>
-                <b-button variant="danger" @click="onDelete(item)">
-                    <b-icon icon="trash" />
-                </b-button>
             </template>
-        </Table> -->
+        </Table>
+
     </div>
 </template>
 
@@ -37,8 +58,7 @@ export default {
             fields: [
                 { key: "productID", label: "ID", thStyle: { width: '15%' } },
                 { key: "productName", label: "Name", thStyle: { width: '50%' } },
-                { key: "productPrice", label: "Price", thStyle: { width: '20%' }},
-                { key: "actions", label: "", thStyle: { width: '15%' } }
+                { key: "productPrice", label: "Price", thStyle: { width: '20%' } }
             ],
         };
     },
@@ -106,11 +126,28 @@ export default {
 </script>
 
 <style>
+.actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 
 .add-button {
-    float: right;
-    margin-right: 1%;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    /* float: right; */
+    /* margin-right: 10%; */
+    /* margin-top: 5px; */
+    /* margin-bottom: 15px; */
+}
+
+.select {
+    display: flex;
+    /* margin-left: 15%; */
+    /* margin-bottom: 30px; */
+}
+
+.products-table {
+    width: 70%;
+    margin: 0 auto;
 }
 </style>
