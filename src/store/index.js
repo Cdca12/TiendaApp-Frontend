@@ -19,17 +19,21 @@ export default new Vuex.Store({
       orderTotal: 0
     }],
     cart: [],
-    clientID: 1
+    clientID: 1,
+    categories: [],
+    productsCategory: []
   },
   getters: {
   },
   mutations: {
+    // Products
     SET_PRODUCTS(state, products) {
       state.products = products;
     },
     SET_PRODUCT(state, product) {
       state.product = product;
     },
+    // Orders
     SET_ORDERS(state, orders) {
       state.orders = orders;
     },
@@ -68,7 +72,15 @@ export default new Vuex.Store({
     },
     CLEAN_CART(state) {
       state.cart = []
-    }
+    },
+    // Categories
+    SET_CATEGORIES(state, categories) {
+      state.categories = categories;
+    },
+    SET_PRODUCTS_CATEGORY(state, productsCategory) {
+      state.productsCategory = productsCategory;
+    },
+
   },
   actions: {
     // Products
@@ -106,16 +118,13 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
-    // Categories
-    // TODO...
-
     // Orders
     getOrders({ commit }) {
       axios
         .get(`${API_URL}/orders`)
         .then(res => {
           let orders = res.data.map(order => {
-            return {...order, orderDate: new Date(order.orderDate).toLocaleDateString('en-US') } 
+            return { ...order, orderDate: new Date(order.orderDate).toLocaleDateString('en-US') }
           });
           commit("SET_ORDERS", orders);
         });
@@ -166,8 +175,21 @@ export default new Vuex.Store({
         .then(onComplete)
         .catch(onError);
     },
-
-
+    // Categories
+    getCategories({ commit }) {
+      axios
+        .get(`${API_URL}/categories`)
+        .then(res => {
+          commit("SET_CATEGORIES", res.data);
+        });
+    },
+    getProductsByCategory({ commit }, { id }) {
+      axios
+        .get(`${API_URL}/products/categories/${id}`)
+        .then(res => {
+          commit("SET_PRODUCTS_CATEGORY", res.data);
+        })
+    }
 
   },
   modules: {

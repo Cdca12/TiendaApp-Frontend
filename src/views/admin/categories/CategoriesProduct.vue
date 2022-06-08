@@ -1,33 +1,26 @@
 <template>
     <div>
-        <h1>Categories</h1>
+        <h1>CategoriesProduct</h1>
 
         <div class="actions">
 
 
-            <div class="select"> Select a category: {{ selected }}
+            <div class="select "> Category:
 
-                <select style="margin-left: 10px" v-model="selected">
-                    <option selected disabled>Select category</option>
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
+                <select 
+                    style="margin-left: 10px; width: 150px" 
+                    v-model="categoryId"
+                    @change="obtainProductsByCategory()">
+                    <option :value="0" disabled>Select a category</option>
 
-                    <!-- <option
-                v-for="item in items"
-                :value="item[iditem]"
-                :key="item[iditem]"
-                :selected="item[iditem]==vmodel"
-            >
-            {{ item[name] }} {{ item[lastname] }}
-            </option>  -->
+                    <option v-for="category in categories" :value="category.categoryID">
+                        {{ category.categoryName }}
+                    </option>
                 </select>
-
-
-
             </div>
+
             <div class="add-button">
-                <b-button variant="dark" to="products/add">
+                <b-button variant="dark">
                     <b-icon icon="plus" /> Add a product to this category
                 </b-button>
             </div>
@@ -35,7 +28,7 @@
         </div>
 
 
-        <Table class="products-table" :items="products" :fields="fields">
+        <Table class="products-table" :items="productsCategory" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
             </template>
         </Table>
@@ -49,7 +42,7 @@ import { mapState, mapActions } from "vuex";
 import Table from "../../../components/Table";
 
 export default {
-    name: "Categories",
+    name: "CategoriesProduct",
     components: {
         Table
     },
@@ -60,16 +53,20 @@ export default {
                 { key: "productName", label: "Name", thStyle: { width: '50%' } },
                 { key: "productPrice", label: "Price", thStyle: { width: '20%' } }
             ],
+            categoryId: 0
         };
     },
     computed: {
-        ...mapState(["products"]),
+        ...mapState(["categories", "productsCategory"]),
     },
     methods: {
-        ...mapActions(["getProducts", "deleteProduct"]),
-        test() {
-            console.log(this.products)
+        ...mapActions(["getCategories", "getProductsByCategory"]),
+        obtainProductsByCategory() {
+            // Test
+            this.getProductsByCategory({ id: this.categoryId });
         },
+
+        // Old
         onEditProduct(item) {
             this.$router.push({
                 name: "EditProduct",
@@ -118,7 +115,7 @@ export default {
     },
     // Life cycle methods
     created() {
-        this.getProducts();
+        this.getCategories();
     },
 };
 
@@ -130,6 +127,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 0 10px;
 }
 
 
