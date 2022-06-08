@@ -83,7 +83,7 @@ export default {
                             title: "Product edited successfully!",
                         });
                         this.$router.push({
-                            name: "Products",
+                            name: "ProductsAdmin",
                         });
                     },
                     onError: err => {

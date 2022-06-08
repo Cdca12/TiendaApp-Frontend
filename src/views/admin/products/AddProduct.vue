@@ -80,7 +80,7 @@ export default {
                             title: "Product created successfully!",
                         });
                         this.$router.push({
-                            name: "Products",
+                            name: "ProductsAdmin",
                         });
                     },
                     onError: err => {
@@ -97,7 +97,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form {
     margin: auto;
     height: 250px;
