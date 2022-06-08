@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import ProductsClient from '../views/client/ProductsClient.vue'
+
+
 import Products from '../views/products/Products.vue'
 import AddProduct from '../views/products/AddProduct.vue'
 import EditProduct from '../views/products/EditProduct.vue'
@@ -9,11 +12,26 @@ import Categories from '../views/categories/Categories.vue'
 
 import Orders from '../views/orders/Orders.vue'
 
-import ProductsClient from '../views/client/ProductsClient.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // Client
+
+  // Products
+  {
+    path: '/client/products',
+    name: 'ProductsClient',
+    component: ProductsClient
+  },
+
+
+
+
+
+
+
+
   // Products
   {
     path: '/products',
@@ -44,12 +62,7 @@ const routes = [
   },
 
 
-  // Client
-  {
-    path: '/client/products',
-    name: 'ProductsClient',
-    component: ProductsClient
-  },
+
 ]
 
 const router = new VueRouter({

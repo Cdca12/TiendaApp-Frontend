@@ -2,7 +2,7 @@
     <div>
         <Cart v-show="showCart" @closeCart="showCart = false" />
 
-        <h1>ProductsClient</h1>
+        <h1>Products</h1>
         <div class="add-button">
             <b-button variant="dark" @click="showCart = true">
                 <b-icon icon="cart" /> Cart
@@ -53,10 +53,14 @@ export default {
                 productName: item.item.productName,
                 productPrice: item.item.productPrice,
                 quantity: 1,
-                clientID: this.clientID, 
+                clientID: this.clientID,
                 total: item.item.productPrice * 1
             }
             this.$store.commit("ADD_TO_CART", this.product);
+            this.$notify({
+                type: "success",
+                title: "Product added to cart"
+            });
         },
     },
     // Life cycle methods
