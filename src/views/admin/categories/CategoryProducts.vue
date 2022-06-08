@@ -7,9 +7,7 @@
 
             <div class="select "> Category:
 
-                <select 
-                    style="margin-left: 10px; width: 150px" 
-                    v-model="categoryId"
+                <select style="margin-left: 10px; width: 150px" v-model="categoryId"
                     @change="obtainProductsByCategory()">
                     <option :value="0" disabled>Select a category</option>
 
@@ -20,18 +18,19 @@
             </div>
 
             <div class="add-button">
-                <b-button variant="dark">
+                <b-button v-bind:disabled='!isValidCategory'  @click="openProductsNotCategory()" variant="dark">
                     <b-icon icon="plus" /> Add a product to this category
                 </b-button>
             </div>
 
         </div>
 
-
         <Table class="products-table" :items="productsCategory" :fields="fields">
             <template slot="actions" slot-scope="{ item }">
             </template>
         </Table>
+
+        <AddCategoryProducts :categoryID="categoryId" v-show="showProductNotCategory" @closeProductNotCategory="showProductNotCategory = false" />
 
     </div>
 </template>
@@ -40,11 +39,13 @@
 
 import { mapState, mapActions } from "vuex";
 import Table from "../../../components/Table";
+import AddCategoryProducts from './AddCategoryProducts';
 
 export default {
     name: "CategoriesProduct",
     components: {
-        Table
+        Table,
+        AddCategoryProducts
     },
     data() {
         return {
@@ -53,18 +54,26 @@ export default {
                 { key: "productName", label: "Name", thStyle: { width: '50%' } },
                 { key: "productPrice", label: "Price", thStyle: { width: '20%' } }
             ],
-            categoryId: 0
+            categoryId: 0,
+            showProductNotCategory: false
         };
     },
     computed: {
         ...mapState(["categories", "productsCategory"]),
+        isValidCategory() {
+            return this.categoryId != 0;
+        }
     },
     methods: {
-        ...mapActions(["getCategories", "getProductsByCategory"]),
+        ...mapActions(["getCategories", "getProductsByCategory", "getProductsNotInCategory"]),
         obtainProductsByCategory() {
-            // Test
             this.getProductsByCategory({ id: this.categoryId });
         },
+        openProductsNotCategory() {
+            this.getProductsNotInCategory({ id: this.categoryId });
+            this.showProductNotCategory = true;
+        },
+
 
         // Old
         onEditProduct(item) {

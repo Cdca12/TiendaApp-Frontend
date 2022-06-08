@@ -10,6 +10,7 @@ const API_URL = "https://localhost:44312/api";
 export default new Vuex.Store({
   state: {
     products: [],
+    productsNotCategory: [],
     product: {},
     orders: [],
     orderDetail: [{
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     },
     SET_PRODUCT(state, product) {
       state.product = product;
+    },
+    SET_PRODUCTS_NOT_CATEGORY(state, productsNotCategory) {
+      state.productsNotCategory = productsNotCategory;
     },
     // Orders
     SET_ORDERS(state, orders) {
@@ -92,6 +96,13 @@ export default new Vuex.Store({
         .get(`${API_URL}/products`)
         .then(res => {
           commit("SET_PRODUCTS", res.data);
+        });
+    },
+    getProductsNotInCategory({ commit }, { id }) {
+      axios
+        .get(`${API_URL}/products/categories/not/${id}`)
+        .then(res => {
+          commit("SET_PRODUCTS_NOT_CATEGORY", res.data);
         });
     },
     getProduct({ commit }, { id, onComplete, onError }) {
@@ -219,7 +230,14 @@ export default new Vuex.Store({
         .then(res => {
           commit("SET_PRODUCTS_CATEGORY", res.data);
         })
-    }
+    },
+    // CategoryProduct
+    createCategoryProduct({ commit }, { body, onComplete, onError }) {
+      axios
+        .post(`${API_URL}/categoryProducts`, body)
+        .then(onComplete)
+        .catch(onError);
+    },
   },
   modules: {
   }
