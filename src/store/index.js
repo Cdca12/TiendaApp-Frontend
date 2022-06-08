@@ -114,7 +114,10 @@ export default new Vuex.Store({
       axios
         .get(`${API_URL}/orders`)
         .then(res => {
-          commit("SET_ORDERS", res.data);
+          let orders = res.data.map(order => {
+            return {...order, orderDate: new Date(order.orderDate).toLocaleDateString('en-US') } 
+          });
+          commit("SET_ORDERS", orders);
         });
     },
     getOrder({ commit }, { id, onComplete, onError }) {
