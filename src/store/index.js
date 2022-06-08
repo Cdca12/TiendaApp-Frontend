@@ -21,6 +21,7 @@ export default new Vuex.Store({
     cart: [],
     clientID: 1,
     categories: [],
+    category: {},
     productsCategory: []
   },
   getters: {
@@ -77,10 +78,12 @@ export default new Vuex.Store({
     SET_CATEGORIES(state, categories) {
       state.categories = categories;
     },
+    SET_CATEGORY(state, category) {
+      state.category = category;
+    },
     SET_PRODUCTS_CATEGORY(state, productsCategory) {
       state.productsCategory = productsCategory;
     },
-
   },
   actions: {
     // Products
@@ -183,6 +186,33 @@ export default new Vuex.Store({
           commit("SET_CATEGORIES", res.data);
         });
     },
+    getCategory({ commit }, { id, onComplete, onError }) {
+      axios
+        .get(`${API_URL}/categories/${id}`)
+        .then(res => {
+          commit("SET_CATEGORY", res.data);
+          onComplete(res);
+        })
+        .catch(onError);
+    },
+    createCategory({ commit }, { body, onComplete, onError }) {
+      axios
+        .post(`${API_URL}/categories`, body)
+        .then(onComplete)
+        .catch(onError);
+    },
+    editCategory({ commit }, { id, body, onComplete, onError }) {
+      axios
+        .put(`${API_URL}/categories/${id}`, body)
+        .then(onComplete)
+        .catch(onError);
+    },
+    deleteCategory({ commit }, { id, onComplete, onError }) {
+      axios
+        .delete(`${API_URL}/categories/${id}`)
+        .then(onComplete)
+        .catch(onError);
+    },
     getProductsByCategory({ commit }, { id }) {
       axios
         .get(`${API_URL}/products/categories/${id}`)
@@ -190,7 +220,6 @@ export default new Vuex.Store({
           commit("SET_PRODUCTS_CATEGORY", res.data);
         })
     }
-
   },
   modules: {
   }
